@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présences - Professeur - MySuptech</title>
+    <meta name="description" content="Marquer la présence des étudiants pour un cours">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary: {50: '#f0f9ff',100: '#e0f2fe',500: '#0ea5e9',600: '#0284c7',700: '#0369a1',800: '#075985',900: '#0c4a6e'}, marine: {50: '#f8fafc',100: '#f1f5f9',800: '#1e293b',900: '#0f172a'} } } } }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen">
+
+    <script src="../../static/js/components/navbar.js"></script>
+    <script src="../../static/js/components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../../static/js/components/navbar.js" defer></script>
+
+    <main class="pt-24 pb-12">
+        <div class="bg-gradient-to-r from-marine-800 via-primary-700 to-marine-900 text-white py-8 border-b border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-feather="check-square" class="w-8 h-8"></i>
+                    <h1 class="text-3xl lg:text-4xl font-bold">Gestion des Présences</h1>
+                </div>
+                <p class="text-slate-300">Marquez rapidement les étudiants présents ou absents</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-12">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-200 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold text-marine-900">Sélectionner la classe / cours</h2>
+                        <p class="text-sm text-slate-500">Choisissez la séance pour marquer la présence</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <select id="select-class" class="px-4 py-2 rounded-lg border border-slate-300">
+                            <option>1ère Année Informatique — Algorithmique</option>
+                            <option>2ème Année Informatique — Bases de données</option>
+                        </select>
+                        <button id="btn-load" class="px-4 py-2 bg-primary-600 text-white rounded-lg">Charger</button>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <form id="attendance-form">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-slate-50 border-b border-slate-200">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700">#</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700">Nom</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700">Matricule</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-slate-700">Présent</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200" id="students-list">
+                                    <tr>
+                                        <td class="px-6 py-4">1</td>
+                                        <td class="px-6 py-4">Jean Dupont</td>
+                                        <td class="px-6 py-4">INF2024001</td>
+                                        <td class="px-6 py-4">
+                                            <label class="inline-flex items-center gap-2">
+                                                <input type="checkbox" name="present_1" class="w-4 h-4 text-emerald-600 border-slate-300 rounded">
+                                                <span class="text-sm text-slate-600">Présent</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4">2</td>
+                                        <td class="px-6 py-4">Fatou Bah</td>
+                                        <td class="px-6 py-4">INF2024002</td>
+                                        <td class="px-6 py-4">
+                                            <label class="inline-flex items-center gap-2">
+                                                <input type="checkbox" name="present_2" class="w-4 h-4 text-emerald-600 border-slate-300 rounded" checked>
+                                                <span class="text-sm text-slate-600">Présent</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4">3</td>
+                                        <td class="px-6 py-4">Marie Diallo</td>
+                                        <td class="px-6 py-4">INF2024003</td>
+                                        <td class="px-6 py-4">
+                                            <label class="inline-flex items-center gap-2">
+                                                <input type="checkbox" name="present_3" class="w-4 h-4 text-emerald-600 border-slate-300 rounded">
+                                                <span class="text-sm text-slate-600">Présent</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 mt-6">
+                            <button type="button" id="btn-reset" class="px-4 py-2 rounded-lg border border-slate-300">Annuler</button>
+                            <button type="submit" class="px-6 py-2 rounded-lg bg-emerald-500 text-white">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <mysuptech-footer></mysuptech-footer>
+    <script src="../../static/js/components/footer.js" defer></script>
+
+    <script>
+        feather.replace();
+
+        // Example JS: reset and simple submit handling
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            document.querySelectorAll('#students-list input[type=checkbox]').forEach(cb => cb.checked = false);
+        });
+
+        document.getElementById('attendance-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // collect present ids (demo only)
+            const present = [];
+            document.querySelectorAll('#students-list tr').forEach((tr, idx) => {
+                const cb = tr.querySelector('input[type=checkbox]');
+                if (cb && cb.checked) present.push(idx+1);
+            });
+            alert('Présences enregistrées: ' + present.join(', '));
+        });
+    </script>
+</body>
+</html>

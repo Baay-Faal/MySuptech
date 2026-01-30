@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Classes - MySuptech</title>
+    <meta name="description" content="Gestion CRUD des classes - MySuptech">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        marine: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen">
+
+    <script src="../../static/js/components/navbar.js"></script>
+    <script src="../../static/js/components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../../static/js/components/navbar.js" defer></script>
+
+    <main class="pt-24 pb-12">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-marine-800 via-primary-700 to-marine-900 text-white py-8 border-b border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="book" class="w-8 h-8"></i>
+                        <h1 class="text-3xl lg:text-4xl font-bold">Gestion des Classes</h1>
+                    </div>
+                    <button id="btn-new-class" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 rounded-lg font-semibold transition-all transform hover:scale-105">
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                        Nouvelle Classe
+                    </button>
+                </div>
+                <p class="text-slate-300">Créez, modifiez et supprimez les classes de votre établissement</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-12">
+            <!-- Filters Section -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-8">
+                <div class="p-6">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Rechercher une classe..." class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                        </div>
+                        <button class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all">
+                            <i data-feather="search" class="w-5 h-5 inline mr-2"></i>
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classes Table -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Nom de la Classe</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Niveau</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Professeur</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Étudiants</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Statut</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-slate-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <!-- Sample Row -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-medium text-marine-900">1ère Année Informatique</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">1ère Année</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-primary-200 flex items-center justify-center text-xs font-bold text-primary-700">AM</div>
+                                        <span>Ahmed Maiga</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <span class="inline-flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-medium">
+                                        <i data-feather="users" class="w-4 h-4"></i>
+                                        32
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Détails">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-medium text-marine-900">2ème Année Informatique</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">2ème Année</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center text-xs font-bold text-emerald-700">FB</div>
+                                        <span>Fatou Ba</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <span class="inline-flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-medium">
+                                        <i data-feather="users" class="w-4 h-4"></i>
+                                        28
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Détails">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-medium text-marine-900">Licence Gestion d'Entreprise</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">Licence</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-rose-200 flex items-center justify-center text-xs font-bold text-rose-700">MD</div>
+                                        <span>Marie Diouf</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    <span class="inline-flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-medium">
+                                        <i data-feather="users" class="w-4 h-4"></i>
+                                        25
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Détails">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-between mt-8">
+                <p class="text-sm text-slate-600">Affichage 1 à 3 sur 28 classes</p>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all disabled:opacity-50" disabled>
+                        <i data-feather="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button class="px-4 py-2 rounded-lg bg-primary-600 text-white font-medium">1</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">2</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">3</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">
+                        <i data-feather="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: New/Edit Class -->
+    <div id="modal-class" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in-up">
+            <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-marine-900">Nouvelle Classe</h2>
+                <button id="btn-close-modal" class="p-1 hover:bg-slate-200 rounded-lg transition-all">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Nom de la Classe</label>
+                    <input type="text" placeholder="Ex: 1ère Année Informatique" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Niveau</label>
+                    <select class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                        <option>Sélectionner un niveau</option>
+                        <option>1ère Année</option>
+                        <option>2ème Année</option>
+                        <option>3ème Année</option>
+                        <option>Licence</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Professeur</label>
+                    <select class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                        <option>Sélectionner un professeur</option>
+                        <option>Ahmed Maiga</option>
+                        <option>Fatou Ba</option>
+                        <option>Marie Diouf</option>
+                    </select>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" id="btn-cancel-modal" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium transition-all">
+                        Annuler
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium transition-all">
+                        Créer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <mysuptech-footer></mysuptech-footer>
+    <script src="../../static/js/components/footer.js" defer></script>
+
+    <script>
+        // Initialize feather icons
+        feather.replace();
+
+        // Modal management
+        const modal = document.getElementById('modal-class');
+        const btnNewClass = document.getElementById('btn-new-class');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const btnCancelModal = document.getElementById('btn-cancel-modal');
+
+        btnNewClass.addEventListener('click', () => modal.classList.remove('hidden'));
+        btnCloseModal.addEventListener('click', () => modal.classList.add('hidden'));
+        btnCancelModal.addEventListener('click', () => modal.classList.add('hidden'));
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

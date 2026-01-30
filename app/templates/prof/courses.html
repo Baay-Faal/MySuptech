@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Cours - Professeur - MySuptech</title>
+    <meta name="description" content="Liste des cours du professeur et actions pour démarrer un cours">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary: {50: '#f0f9ff',100: '#e0f2fe',500: '#0ea5e9',600: '#0284c7',700: '#0369a1',800: '#075985',900: '#0c4a6e'}, marine: {50: '#f8fafc',100: '#f1f5f9',800: '#1e293b',900: '#0f172a'} } } } }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen">
+
+    <script src="../../static/js/components/navbar.js"></script>
+    <script src="../../static/js/components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../../static/js/components/navbar.js" defer></script>
+
+    <main class="pt-24 pb-12">
+        <div class="bg-gradient-to-r from-marine-800 via-primary-700 to-marine-900 text-white py-8 border-b border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="book-open" class="w-8 h-8"></i>
+                        <h1 class="text-3xl lg:text-4xl font-bold">Mes Cours</h1>
+                    </div>
+                    <a href="{{ url_for('prof_new_course') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 rounded-lg font-semibold transition-all">
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                        Nouveau Cours
+                    </a>
+                </div>
+                <p class="text-slate-300">Tous les cours que vous enseignez</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-12">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <input type="text" placeholder="Rechercher un cours..." class="w-1/3 px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100">Filtrer</button>
+                            <button class="px-4 py-2 rounded-lg bg-primary-600 text-white">Exporter</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Course Card -->
+                        <div class="p-4 border rounded-lg flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-slate-600">INF201 — Algorithmique</div>
+                                <div class="text-lg font-semibold text-marine-900">Algorithmique et Structures de Données</div>
+                                <div class="text-sm text-slate-500">Classe : 2ème Année Informatique — 32 étudiants</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="{{ url_for('prof_start_course', course_id=1) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    Démarrer
+                                </a>
+                                <a href="{{ url_for('prof_course_edit', course_id=1) }}" class="px-3 py-2 rounded-lg bg-primary-50 hover:bg-primary-100 text-primary-700">Éditer</a>
+                                <button class="px-3 py-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700">Supprimer</button>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded-lg flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-slate-600">BD301 — Bases de données</div>
+                                <div class="text-lg font-semibold text-marine-900">Conception et Administration des Bases</div>
+                                <div class="text-sm text-slate-500">Classe : Licence Gestion — 25 étudiants</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="{{ url_for('prof_start_course', course_id=2) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    Démarrer
+                                </a>
+                                <a href="{{ url_for('prof_course_edit', course_id=2) }}" class="px-3 py-2 rounded-lg bg-primary-50 hover:bg-primary-100 text-primary-700">Éditer</a>
+                                <button class="px-3 py-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700">Supprimer</button>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded-lg flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-slate-600">WEB101 — Développement Web</div>
+                                <div class="text-lg font-semibold text-marine-900">Introduction au Web & Frontend</div>
+                                <div class="text-sm text-slate-500">Classe : 1ère Année Informatique — 30 étudiants</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="{{ url_for('prof_start_course', course_id=3) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    Démarrer
+                                </a>
+                                <a href="{{ url_for('prof_course_edit', course_id=3) }}" class="px-3 py-2 rounded-lg bg-primary-50 hover:bg-primary-100 text-primary-700">Éditer</a>
+                                <button class="px-3 py-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700">Supprimer</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <mysuptech-footer></mysuptech-footer>
+    <script src="../../static/js/components/footer.js" defer></script>
+
+    <script>feather.replace();</script>
+</body>
+</html>

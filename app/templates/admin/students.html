@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Étudiants - MySuptech</title>
+    <meta name="description" content="Gestion des étudiants par classe - MySuptech">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        marine: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen">
+
+    <script src="../../static/js/components/navbar.js"></script>
+    <script src="../../static/js/components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../../static/js/components/navbar.js" defer></script>
+
+    <main class="pt-24 pb-12">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-marine-800 via-primary-700 to-marine-900 text-white py-8 border-b border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="users" class="w-8 h-8"></i>
+                        <h1 class="text-3xl lg:text-4xl font-bold">Gestion des Étudiants</h1>
+                    </div>
+                    <div class="flex gap-3">
+                        <button id="btn-import" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-600 hover:bg-slate-700 rounded-lg font-semibold transition-all">
+                            <i data-feather="upload" class="w-5 h-5"></i>
+                            Importer CSV
+                        </button>
+                        <button id="btn-add-student" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 rounded-lg font-semibold transition-all transform hover:scale-105">
+                            <i data-feather="user-plus" class="w-5 h-5"></i>
+                            Ajouter Étudiant
+                        </button>
+                    </div>
+                </div>
+                <p class="text-slate-300">Gérez les étudiants de votre établissement par classe</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-12">
+            <!-- Filters Section -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-8">
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Filtrer par Classe</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                                <option>Toutes les classes</option>
+                                <option>1ère Année Informatique</option>
+                                <option>2ème Année Informatique</option>
+                                <option>Licence Gestion d'Entreprise</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Rechercher</label>
+                            <div class="relative">
+                                <i data-feather="search" class="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                                <input type="text" placeholder="Nom, Prénom ou Matricule..." class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Statut</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                                <option>Tous les statuts</option>
+                                <option>Actif</option>
+                                <option>Inactif</option>
+                                <option>Suspendu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="w-full px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all">
+                        Appliquer les filtres
+                    </button>
+                </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Matricule</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Nom Complet</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Email</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Classe</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Téléphone</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Statut</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-slate-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <!-- Sample Rows -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-mono font-medium text-marine-900">INF2024001</td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center text-xs font-bold text-emerald-700">JD</div>
+                                        <span>Jean Dupont</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">jean.dupont@student.isi.sn</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">1ère Année Info</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">+221 77 123 45 67</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Profil">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-mono font-medium text-marine-900">INF2024002</td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-primary-200 flex items-center justify-center text-xs font-bold text-primary-700">FB</div>
+                                        <span>Fatou Bah</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">fatou.bah@student.isi.sn</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">1ère Année Info</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">+221 78 234 56 78</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Profil">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-mono font-medium text-marine-900">INF2024003</td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-rose-200 flex items-center justify-center text-xs font-bold text-rose-700">MD</div>
+                                        <span>Marie Diallo</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">marie.diallo@student.isi.sn</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">2ème Année Info</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">+221 75 345 67 89</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                        Suspendu
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Profil">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-mono font-medium text-marine-900">GEST2024001</td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-indigo-200 flex items-center justify-center text-xs font-bold text-indigo-700">AS</div>
+                                        <span>Ahmed Sarr</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600">ahmed.sarr@student.isi.sn</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">Licence Gestion</td>
+                                <td class="px-6 py-4 text-sm text-slate-600">+221 76 456 78 90</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-medium text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="p-2 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-600 transition-all" title="Modifier">
+                                            <i data-feather="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-600 transition-all" title="Voir Profil">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="p-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-all" title="Supprimer">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-between mt-8">
+                <p class="text-sm text-slate-600">Affichage 1 à 4 sur 156 étudiants</p>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all disabled:opacity-50" disabled>
+                        <i data-feather="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button class="px-4 py-2 rounded-lg bg-primary-600 text-white font-medium">1</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">2</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">3</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">...</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">40</button>
+                    <button class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition-all">
+                        <i data-feather="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Add/Edit Student -->
+    <div id="modal-student" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in-up">
+            <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-marine-900">Ajouter Étudiant</h2>
+                <button id="btn-close-modal" class="p-1 hover:bg-slate-200 rounded-lg transition-all">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Nom Complet</label>
+                    <input type="text" placeholder="Ex: Jean Dupont" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Institutionnel</label>
+                    <input type="email" placeholder="jean.dupont@student.isi.sn" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Classe</label>
+                    <select class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                        <option>Sélectionner une classe</option>
+                        <option>1ère Année Informatique</option>
+                        <option>2ème Année Informatique</option>
+                        <option>Licence Gestion d'Entreprise</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Téléphone</label>
+                    <input type="tel" placeholder="+221 77 123 45 67" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" id="btn-cancel-modal" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium transition-all">
+                        Annuler
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium transition-all">
+                        Ajouter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Import CSV -->
+    <div id="modal-import" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in-up">
+            <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-marine-900">Importer des Étudiants</h2>
+                <button id="btn-close-import" class="p-1 hover:bg-slate-200 rounded-lg transition-all">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form class="p-6 space-y-4">
+                <div class="text-center py-8 border-2 border-dashed border-slate-300 rounded-lg hover:border-primary-500 transition-colors cursor-pointer">
+                    <i data-feather="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-2"></i>
+                    <p class="text-sm font-medium text-slate-700 mb-1">Déposer votre fichier CSV ici</p>
+                    <p class="text-xs text-slate-500 mb-3">ou cliquez pour parcourir</p>
+                    <input type="file" accept=".csv" class="hidden" id="file-input">
+                </div>
+                <div class="text-xs text-slate-600 space-y-1">
+                    <p><strong>Format requis:</strong></p>
+                    <p>Nom, Prénom, Email, Classe, Téléphone</p>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" id="btn-close-import-form" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium transition-all">
+                        Annuler
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium transition-all">
+                        Importer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <mysuptech-footer></mysuptech-footer>
+    <script src="../../static/js/components/footer.js" defer></script>
+
+    <script>
+        // Initialize feather icons
+        feather.replace();
+
+        // Modals management
+        const modalStudent = document.getElementById('modal-student');
+        const modalImport = document.getElementById('modal-import');
+        const btnAddStudent = document.getElementById('btn-add-student');
+        const btnImport = document.getElementById('btn-import');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const btnCancelModal = document.getElementById('btn-cancel-modal');
+        const btnCloseImport = document.getElementById('btn-close-import');
+        const btnCloseImportForm = document.getElementById('btn-close-import-form');
+
+        // Student Modal
+        btnAddStudent.addEventListener('click', () => modalStudent.classList.remove('hidden'));
+        btnCloseModal.addEventListener('click', () => modalStudent.classList.add('hidden'));
+        btnCancelModal.addEventListener('click', () => modalStudent.classList.add('hidden'));
+        modalStudent.addEventListener('click', (e) => {
+            if (e.target === modalStudent) modalStudent.classList.add('hidden');
+        });
+
+        // Import Modal
+        btnImport.addEventListener('click', () => modalImport.classList.remove('hidden'));
+        btnCloseImport.addEventListener('click', () => modalImport.classList.add('hidden'));
+        btnCloseImportForm.addEventListener('click', () => modalImport.classList.add('hidden'));
+        modalImport.addEventListener('click', (e) => {
+            if (e.target === modalImport) modalImport.classList.add('hidden');
+        });
+
+        // File upload handling
+        const uploadArea = document.querySelector('[accept=".csv"]').parentElement;
+        uploadArea.addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const p = uploadArea.querySelector('p:first-child');
+                p.textContent = file.name;
+            }
+        });
+    </script>
+</body>
+</html>

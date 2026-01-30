@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySuptech - Plateforme de Gestion Pédagogique | ISI SUPTECH</title>
+    <meta name="description" content="MySuptech remplace les cahiers de textes papier par une solution numérique intelligente pour ISI SUPTECH. Gestion des cours, appels en temps réel, et suivi pédagogique.">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        marine: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50">
+
+    <!-- Custom Components -->
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../static/js/components/navbar.js" defer></script>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-marine-900 via-marine-800 to-primary-900 text-white pt-32 pb-20 lg:pt-40 lg:pb-32">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8 animate-fade-in-up">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Version 2.0 disponible pour ISI SUPTECH
+                        </div>
+                        <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
+                            La gestion pédagogique <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">réinventée</span>
+                        </h1>
+                        <p class="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-xl">
+                            Fini les cahiers de textes papier et les feuilles d'appel. MySuptech centralise la vie scolaire avec un tableau de bord temps réel et des rappels intelligents pour les professeurs.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#features" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold transition-all transform hover:scale-105 shadow-lg shadow-emerald-500/30">
+                                <i data-feather="book-open" class="w-5 h-5 mr-2"></i>
+                                Découvrir la plateforme
+                            </a>
+                            <a href="{{ url_for('login') }}" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold transition-all">
+                                <i data-feather="log-in" class="w-5 h-5 mr-2"></i>
+                                Se connecter
+                            </a>
+                        </div>
+<div class="flex items-center gap-6 text-sm text-slate-400 pt-4">
+                            <div class="flex items-center gap-2">
+                                <i data-feather="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                                <span>100% Responsive</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                                <span>Temps réel</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i data-feather="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                                <span>Flask/Python</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Preview -->
+                    <div class="relative lg:ml-auto">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl opacity-30 blur-2xl animate-pulse"></div>
+                        <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200">
+                            <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex items-center gap-2">
+                                <div class="flex gap-1.5">
+                                    <div class="w-3 h-3 rounded-full bg-rose-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                                </div>
+                                <div class="ml-4 text-xs text-slate-500 font-mono">Tableau de Bord Admin - LIVE</div>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <div class="text-sm text-slate-500">Cours en cours</div>
+                                        <div class="text-2xl font-bold text-slate-800">12 <span class="text-sm font-normal text-slate-500">sessions actives</span></div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-medium flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                            8 Actifs
+                                        </span>
+                                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-medium">2 Retards</span>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-semibold text-slate-800">Licence 3 GL - Java Avancé</div>
+                                            <div class="text-xs text-slate-500">Prof. Robert • Salle A12</div>
+                                        </div>
+                                        <span class="text-xs font-mono text-emerald-600">08:30 - 10:30</span>
+                                    </div>
+
+                                    <div class="flex items-center gap-4 p-3 rounded-lg bg-rose-50 border border-rose-200">
+                                        <div class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-semibold text-slate-800">Master 1 RS - Réseaux</div>
+                                            <div class="text-xs text-slate-500">Prof. Malle • Salle B05</div>
+                                        </div>
+                                        <span class="text-xs font-mono text-rose-600">08:45 - 10:45 ⚠️ Retard</span>
+                                    </div>
+
+                                    <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-50 border border-slate-200 opacity-60">
+                                        <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-semibold text-slate-800">Licence 2 AS - Algorithmique</div>
+                                            <div class="text-xs text-slate-500">Non assigné</div>
+                                        </div>
+                                        <span class="text-xs font-mono text-slate-500">11:00 - 13:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-12 bg-white border-b border-slate-200">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="space-y-2">
+                        <div class="text-3xl font-bold text-marine-900">3</div>
+                        <div class="text-sm text-slate-600">Acteurs principaux</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl font-bold text-marine-900">100%</div>
+                        <div class="text-sm text-slate-600">Mobile</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl font-bold text-marine-900">Temps réel</div>
+                        <div class="text-sm text-slate-600">Supervision en directe</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl font-bold text-marine-900">0</div>
+                        <div class="text-sm text-slate-600">Papier utilisé</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Admin Section -->
+        <section id="features" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-primary-600 font-semibold tracking-wider uppercase text-sm">Module Administration</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-marine-900 mt-4 mb-4">Contrôle total de l'établissement</h2>
+                    <p class="text-slate-600 text-lg">Un back-office puissant pour les directeurs et surveillants. Gérez les plannings, supervisez les cours en temps réel et suivez l'assiduité.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-xl transition-shadow group">
+                        <div class="w-14 h-14 rounded-lg bg-primary-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-feather="users" class="w-7 h-7 text-primary-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-marine-900 mb-3">Gestion des Utilisateurs</h3>
+                        <p class="text-slate-600 mb-4">Création et gestion des comptes professeurs, importation des listes étudiants par classe, attribution des matières.</p>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li class="flex items-center gap-2"><i data-feather="check" class="w-4 h-4 text-emerald-500"></i> Import CSV étudiants</li>
+                            <li class="flex items-center gap-2"><i data-feather="check" class="w-4 h-4 text-emerald-500"></i> Profils sécurisés</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-xl transition-shadow group">
+                        <div class="w-14 h-14 rounded-lg bg-amber-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-feather="calendar" class="w-7 h-7 text-amber-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-marine-900 mb-3">Planification Intelligente</h3>
+                        <p class="text-slate-600 mb-4">Attribution des créneaux horaires, gestion des salles et des classes. Emploi du temps unique et centralisé.</p>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li class="flex items-center gap-2"><i data-feather="check" class="w-4 h-4 text-emerald-500"></i> Drag & drop planning</li>
+                            <li class="flex items-center gap-2"><i data-feather="check" class="w-4 h-4 text-emerald-500"></i> Alertes conflits</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-xl transition-shadow group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -mr-16 -mt-16"></div>
+                        <div class="w-14 h-14 rounded-lg bg-emerald-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform relative z-10">
+                            <i data-feather="activity" class="w-7 h-7 text-emerald-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-marine-900 mb-3">Tableau de Bord LIVE</h3>
+                        <p class="text-slate-600 mb-4">Supervision temps réel des cours avec indicateurs colorés : Vert (actif), Rouge (retard), Gris (libre).</p>
+                        <div class="flex gap-2 mt-4">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500" title="Cours actif"></span>
+                            <span class="w-3 h-3 rounded-full bg-rose-500" title="Retard"></span>
+                            <span class="w-3 h-3 rounded-full bg-slate-300" title="Aucun cours"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile Professor Section -->
+        <section id="demo" class="py-20 bg-white overflow-hidden">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="relative mx-auto w-80 h-[600px] bg-marine-900 rounded-[3rem] border-8 border-marine-800 shadow-2xl overflow-hidden">
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-marine-800 rounded-b-xl z-20"></div>
+
+                            <!-- Phone Screen Content -->
+                            <div class="h-full bg-slate-50 overflow-y-auto scrollbar-hide relative">
+                                <!-- Status Bar -->
+                                <div class="bg-marine-900 text-white px-6 py-3 flex justify-between items-center text-xs pt-8">
+                                    <span>9:41</span>
+                                    <div class="flex gap-1">
+                                        <i data-feather="wifi" class="w-3 h-3"></i>
+                                        <i data-feather="battery" class="w-3 h-3"></i>
+                                    </div>
+                                </div>
+
+                                <!-- App Header -->
+                                <div class="bg-white px-4 py-4 border-b border-slate-200 sticky top-0 z-10">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-xs text-slate-500">Bonjour,</div>
+                                            <div class="font-bold text-marine-900">Prof. Robert</div>
+                                        </div>
+                                        <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                            <i data-feather="user" class="w-4 h-4 text-primary-600"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Smart Reminder Alert -->
+                                <div class="mx-4 mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg shadow-sm animate-pulse-slow">
+                                    <div class="flex items-start gap-3">
+                                        <i data-feather="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5"></i>
+                                        <div>
+                                            <div class="text-sm font-bold text-amber-800 mb-1">Rappel Intelligent</div>
+                                            <div class="text-xs text-amber-700 leading-relaxed">
+                                                Lors du dernier cours de <strong>Java Avancé</strong> avec <strong>L3 GL</strong>, vous vous êtes arrêté à : <br/>
+                                                <span class="font-mono bg-amber-100 px-1 rounded mt-1 inline-block">Chapitre 4 - Page 42</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline -->
+                                <div class="p-4 space-y-4">
+                                    <div class="text-sm font-bold text-slate-700 mb-2">Votre journée</div>
+
+                                    <!-- Current Course -->
+                                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-emerald-500 relative">
+                                        <div class="absolute -left-2 top-1/2 w-1 h-12 bg-emerald-500 rounded-r"></div>
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded font-medium">En cours</div>
+                                            <span class="text-xs text-slate-400">08:30 - 10:30</span>
+                                        </div>
+                                        <h4 class="font-bold text-marine-900 mb-1">Java Avancé</h4>
+                                        <p class="text-xs text-slate-500 mb-3">Licence 3 GL • Salle A12</p>
+                                        <button class="w-full py-2 bg-emerald-500 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+                                            <i data-feather="check-circle" class="w-4 h-4"></i>
+                                            Valider la présence
+                                        </button>
+                                    </div>
+
+                                    <!-- Next Course -->
+                                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 opacity-75">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded">À venir</div>
+                                            <span class="text-xs text-slate-400">10:45 - 12:45</span>
+                                        </div>
+                                        <h4 class="font-bold text-marine-900 mb-1">Base de Données</h4>
+                                        <p class="text-xs text-slate-500">Master 1 RS • Salle B03</p>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Nav -->
+                                <div class="bg-white border-t border-slate-200 px-6 py-4 flex justify-around items-center absolute bottom-0 w-full">
+                                    <div class="flex flex-col items-center text-primary-600">
+                                        <i data-feather="home" class="w-5 h-5"></i>
+                                        <span class="text-[10px] mt-1">Accueil</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-400">
+                                        <i data-feather="calendar" class="w-5 h-5"></i>
+                                        <span class="text-[10px] mt-1">Agenda</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-400">
+                                        <i data-feather="file-text" class="w-5 h-5"></i>
+                                        <span class="text-[10px] mt-1">Cahier</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-400">
+                                        <i data-feather="user" class="w-5 h-5"></i>
+                                        <span class="text-[10px] mt-1">Profil</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2 space-y-8">
+                        <div>
+                            <span class="text-primary-600 font-semibold tracking-wider uppercase text-sm">Interface Professeur</span>
+                            <h2 class="text-3xl lg:text-4xl font-bold text-marine-900 mt-4 mb-4">Conçue pour le mobile, optimisée pour la classe</h2>
+                            <p class="text-slate-600 text-lg">Une expérience mobile-first qui accompagne les professeurs au quotidien. De l'appel d'absences au cahier de texte numérique, tout est accessible en quelques clics.</p>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="bell" class="w-6 h-6 text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-marine-900 mb-1">Rappel Intelligent</h4>
+                                    <p class="text-slate-600">Ne perdez plus le fil ! L'application affiche automatiquement où vous vous êtes arrêté lors du dernier cours avec cette classe.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="clipboard" class="w-6 h-6 text-primary-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-marine-900 mb-1">Appel simplifié</h4>
+                                    <p class="text-slate-600">Liste pré-cochée "Présent". Un simple tap pour marquer les absents. Visualisation instantanée du taux d'absence cumulé par étudiant.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                    <i data-feather="book" class="w-6 h-6 text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-marine-900 mb-1">Cahier de Texte Numérique</h4>
+                                    <p class="text-slate-600">Remplissez votre cahier de texte en fin de séance : résumé, devoirs donnés et point d'arrêt précis (chapitre, page, exercice).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Status Demo Section -->
+        <section class="py-20 bg-slate-900 text-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl lg:text-4xl font-bold mb-4">Supervision en temps réel</h2>
+                    <p class="text-slate-400">Le directeur des études visualise instantanément l'état de l'établissement grâce au code couleur intuitif.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="bg-slate-800 rounded-xl p-6 border border-emerald-500/30 relative overflow-hidden group hover:transform hover:scale-105 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse"></div>
+                            <span class="font-bold text-emerald-400">Cours Actif</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mb-4">Le professeur a validé sa présence. Le cours se déroule normalement.</p>
+                        <div class="bg-slate-900/50 rounded-lg p-3 text-xs font-mono text-emerald-300">
+                            L3 GL • Java • Salle A12<br/>
+                            Prof. Lo • 08:35
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-xl p-6 border border-rose-500/30 relative overflow-hidden group hover:transform hover:scale-105 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/20 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-4 h-4 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)] animate-ping"></div>
+                            <span class="font-bold text-rose-400">Retard Détecté</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mb-4">Alerte après 15 minutes sans validation de présence du professeur.</p>
+                        <div class="bg-slate-900/50 rounded-lg p-3 text-xs font-mono text-rose-300">
+                            M1 RS • Réseaux • Salle B05<br/>
+                            ⚠️ Non démarré • 08:47
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-600/30 relative overflow-hidden group hover:transform hover:scale-105 transition-all">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-500/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-4 h-4 rounded-full bg-slate-500"></div>
+                            <span class="font-bold text-slate-400">Salle Libre</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mb-4">Aucun cours programmé sur ce créneau. Salle disponible.</p>
+                        <div class="bg-slate-900/50 rounded-lg p-3 text-xs font-mono text-slate-500">
+                            Salle C03 • 08:30-10:30<br/>
+                            Aucun cours prévu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Stack -->
+        <section class="py-16 bg-slate-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl font-bold text-marine-900">Stack Technique Robuste</h2>
+                    <p class="text-slate-600 mt-2">Des technologies éprouvées pour une application fiable et évolutive</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-8 items-center opacity-70 grayscale hover:grayscale-0 transition-all">
+                    <div class="flex items-center gap-2 text-slate-700 font-semibold">
+                        <div class="w-10 h-10 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-xs">Py</div>
+                        <span>Python / Flask</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-700 font-semibold">
+                        <div class="w-10 h-10 bg-cyan-600 rounded flex items-center justify-center text-white font-bold text-xs">SQL</div>
+                        <span>PostgreSQL</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-700 font-semibold">
+                        <div class="w-10 h-10 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-xs">TW</div>
+                        <span>Tailwind CSS</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-700 font-semibold">
+                        <div class="w-10 h-10 bg-yellow-500 rounded flex items-center justify-center text-white font-bold text-xs">JS</div>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-gradient-to-br from-primary-600 to-marine-800 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl lg:text-5xl font-bold mb-6">Prêt à digitaliser votre établissement ?</h2>
+                <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">Rejoignez ISI SUPTECH dans l'aventure MySuptech et offrez à votre corps professoral un outil moderne et efficace.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{{ url_for('register') }}" class="px-8 py-4 bg-white text-marine-900 rounded-lg font-bold hover:bg-slate-100 transition-colors shadow-lg inline-flex items-center justify-center gap-2">
+                        <i data-feather="user-plus" class="w-5 h-5"></i>
+                        Créer un compte
+                    </a>
+                    <a href="{{ url_for('login') }}" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2">
+                        <i data-feather="log-in" class="w-5 h-5"></i>
+                        Se connecter
+                    </a>
+                </div>
+</div>
+        </section>
+    </main>
+
+    <mysuptech-footer></mysuptech-footer>
+
+    <script src="../static/js/components/footer.js" defer></script>
+
+    <script>feather.replace();</script>
+</body>
+</html>

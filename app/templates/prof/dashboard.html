@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Professeur - MySuptech</title>
+    <meta name="description" content="Tableau de bord professeur : emploi du temps du jour et actions rapides">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary: {50: '#f0f9ff',100: '#e0f2fe',500: '#0ea5e9',600: '#0284c7',700: '#0369a1',800: '#075985',900: '#0c4a6e'}, marine: {50: '#f8fafc',100: '#f1f5f9',800: '#1e293b',900: '#0f172a'} } } } }
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-screen">
+
+    <script src="../../static/js/components/navbar.js"></script>
+    <script src="../../static/js/components/footer.js"></script>
+
+    <mysuptech-navbar></mysuptech-navbar>
+    <script src="../../static/js/components/navbar.js" defer></script>
+
+    <main class="pt-24 pb-12">
+        <div class="bg-gradient-to-r from-marine-800 via-primary-700 to-marine-900 text-white py-8 border-b border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-feather="grid" class="w-8 h-8"></i>
+                    <h1 class="text-3xl lg:text-4xl font-bold">Tableau de Bord — Professeur</h1>
+                </div>
+                <p class="text-slate-300">Emploi du temps du jour, accès rapides et résumé des cours</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Today's Schedule -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center gap-2">
+                        <i data-feather="clock" class="w-5 h-5 text-primary-600"></i>
+                        <h2 class="text-lg font-bold text-marine-900">Emploi du Temps — Aujourd'hui</h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <!-- Sample schedule items -->
+                        <div class="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                                <div class="text-sm font-medium text-slate-600">08:30 — 10:00</div>
+                                <div class="text-lg font-semibold text-marine-900">Algorithmique — Salle A101</div>
+                                <div class="text-sm text-slate-500">Classe : 2ème Année Informatique</div>
+                            </div>
+                            <div class="flex flex-col items-end gap-2">
+                                <a href="{{ url_for('prof_start_course', course_id=1) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    Démarrer
+                                </a>
+                                <a href="#" class="text-sm text-slate-500">Présence</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                                <div class="text-sm font-medium text-slate-600">10:15 — 11:45</div>
+                                <div class="text-lg font-semibold text-marine-900">Bases de données — Salle B203</div>
+                                <div class="text-sm text-slate-500">Classe : Licence Gestion</div>
+                            </div>
+                            <div class="flex flex-col items-end gap-2">
+                                <a href="{{ url_for('prof_start_course', course_id=2) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    Démarrer
+                                </a>
+                                <a href="#" class="text-sm text-slate-500">Présence</a>
+                            </div>
+                        </div>
+
+                        <div class="text-sm text-slate-500">Aucun autre cours prévu aujourd'hui.</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions / Summary -->
+                <aside class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                    <h3 class="text-marine-900 font-bold mb-3">Accès Rapides</h3>
+                    <div class="space-y-3">
+                        <a href="{{ url_for('prof_courses') }}" class="flex items-center gap-3 p-3 rounded-lg bg-primary-50 hover:bg-primary-100 text-primary-700 font-medium">
+                            <i data-feather="book-open" class="w-5 h-5"></i>
+                            Mes Cours
+                        </a>
+                        <a href="{{ url_for('prof_attendance') }}" class="flex items-center gap-3 p-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium">
+                            <i data-feather="check-square" class="w-5 h-5"></i>
+                            Gérer Présences
+                        </a>
+                        <a href="#" class="flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-700 font-medium">
+                            <i data-feather="file-text" class="w-5 h-5"></i>
+                            Ressources du Cours
+                        </a>
+                    </div>
+
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-slate-600">Prochains rappels</h4>
+                        <ul class="mt-2 text-sm text-slate-500 space-y-2">
+                            <li>Déposer les exercices sur la plateforme — aujourd'hui</li>
+                            <li>Valider les notes — cette semaine</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <mysuptech-footer></mysuptech-footer>
+    <script src="../../static/js/components/footer.js" defer></script>
+
+    <script>feather.replace();</script>
+</body>
+</html>
