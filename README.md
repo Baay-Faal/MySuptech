@@ -20,6 +20,27 @@
 - Gérer les classes et les étudiants
 - Consulter les statistiques de présence
 
+Les administrateurs peuvent :
+- Voir le tableau de bord global
+- Gérer les professeurs
+- Gérer les classes
+- Gérer les étudiants
+- Accéder à tous les rapports de présences
+
+---
+
+## 👥 Système de rôles
+
+| Rôle | Accès | Dashboard |
+|------|-------|-----------|
+| **Admin** | Tout le système | `/dashboard/admin` |
+| **Prof** | Ses cours & présences | `/dashboard/prof` |
+
+**Gestion des admins:**
+- Les admins sont créés **directement en base de données** via le script `add_admin.py`
+- Pour ajouter un admin, modifier `add_admin.py` et exécuter : `python add_admin.py`
+- Pour la sécurité, les admins ne peuvent PAS être créés via la page d'inscription
+
 ---
 
 ## 🏗️ Architecture
@@ -184,7 +205,16 @@ pip install -r requirements.txt
 python create_db.py
 ```
 
-5. **Lancer l'application**
+5. **Ajouter les admins (IMPORTANT)**
+```bash
+python add_admin.py
+```
+Cela crée un compte admin par défaut:
+- Username: `admin`
+- Email: `admin@mysuptech.com`
+- Password: `admin123` (À CHANGER en production!)
+
+6. **Lancer l'application**
 ```bash
 python run.py
 ```
@@ -317,8 +347,8 @@ MySuptech/
 
 ### Branches
 - `main` - Branche de production (stable)
-- `feature/backend` - Branche toi (Backend/APIs)
-- `feature/frontend` - Branche ton ami (Templates/UI)
+- `gueye` - Branche toi (Backend/APIs)
+- `kane` - Branche ton ami (Templates/UI)
 
 ### Workflow
 1. Chacun travaille sur sa branche
@@ -389,8 +419,8 @@ Werkzeug
 ## 📞 Contact & Support
 
 **Équipe:**
-- Backend (Toi) : `feature/backend`
-- Frontend (Ton ami) : `feature/frontend`
+- Backend (Toi) : `gueye`
+- Frontend (Ton ami) : `kane`
 
 **Dernier update:** 28 Janvier 2026
 
